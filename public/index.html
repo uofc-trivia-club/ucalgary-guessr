@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>UCalgary Guessr</title>
+
+    <!-- Leaflet CSS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <h1>UCalgary Guessr</h1>
+        <img id="logo" src="/assets/logos/logo.png" alt="UCalgary Trivia Club logo" />
+      </header>
+
+      <div id="status-panel">
+        <div id="score-summary">Total score: 0</div>
+        <div id="result"></div>
+      </div>
+
+      <main id="layout">
+        <section id="image-panel">
+          <h2 id="round-title">Round</h2>
+
+          <img id="scene-image" src="" alt="Campus scene" />
+
+          <div id="controls">
+            <button id="make-guess-btn">Make guess</button>
+            <button id="next-image-btn">Next image</button>
+            <button id="restart-btn" style="display: none;">Restart</button>
+          </div>
+        </section>
+
+        <section id="map-panel">
+          <div id="map"></div>
+        </section>
+      </main>
+    </div>
+
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+
+    <script type="module" src="/js/main.js"></script>
+  </body>
+</html>

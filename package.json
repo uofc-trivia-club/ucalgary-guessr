@@ -1,0 +1,32 @@
+{
+  "name": "ucalgary-guessr",
+  "version": "1.0.0",
+  "description": "A Guessr game based on the University of Calgary — try to guess the location of a photo!",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "nodemon server/server.js",
+    "db:init": "node server/db/init.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sha-rar/ucalgary-guessr.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/sha-rar/ucalgary-guessr/issues"
+  },
+  "homepage": "https://github.com/sha-rar/ucalgary-guessr#readme",
+  "dependencies": {
+    "better-sqlite3": "^12.5.0",
+    "cors": "^2.8.5",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}
