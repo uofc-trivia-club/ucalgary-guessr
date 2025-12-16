@@ -26,7 +26,7 @@ export function setSceneImage(src) {
 
   img.style.opacity = 0.2;
 
-  // Remove this _ts param if we use use pre-signed URLs
+  // Remove this _ts param if we use pre-signed URLs
   const url = src + (src.includes("?") ? "&" : "?") + "_ts=" + Date.now();
 
   const preloader = new Image();
