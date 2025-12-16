@@ -25,7 +25,7 @@ A Guessr game based on the University of Calgary — try to guess the location o
 
 ### 1. Prerequisites
 
-- Node.js (18+ recommended)
+- Node.js (latest version recommended)
 - npm (comes with Node)
 
 ### 2. Install dependencies
@@ -87,12 +87,7 @@ public/                            # Front-end static assets served by the app
     maps/
       ucalgary-campus.png          # Campus map image used as the Leaflet overlay
     photos/                        # Photos used in the game
-      31st-terminal.jpg
-      atrium-admin.jpeg
-      EEEL-facing-ES.jpg
-      MH-south.jpg          
-      tfdl-floor-2.jpg      
-
+      (...)
   css/
     styles.css                     # Global styles for layout, cards, buttons, map widget, etc.
 
