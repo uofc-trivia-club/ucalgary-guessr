@@ -1,5 +1,17 @@
 /* public/css/styles.css */
 
+:root {
+  --uc-red: #c8102e;
+  --uc-red-dark: #a70d26;
+  --ink: #171717;
+  --muted: #686868;
+  --surface: #ffffff;
+  --surface-soft: #f5f4f2;
+  --border: #e5e2de;
+  --shadow: 0 14px 40px rgba(23, 23, 23, 0.08);
+  --shadow-small: 0 8px 24px rgba(23, 23, 23, 0.07);
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -9,157 +21,501 @@
 
 html,
 body {
-  margin: 0;
-  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  background: var(--surface-soft);
+  color: var(--ink);
+}
+
+button {
+  font: inherit;
 }
 
 #app {
-  display: flex;
-  flex-direction: column;
-  position: relative;
+  min-height: 100vh;
 }
 
-/* Score + result in top-right */
-#status-panel {
-  position: absolute;
-  top: 8rem;
-  right: 2rem;
-  max-width: 260px;
+/* ---------- Header ---------- */
 
-  padding: 1rem 1.25rem;
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
-  border: 1px solid #eee;
+.site-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
 }
 
-/* Header with title left + logo right */
-header {
-  padding: 0.75rem 1rem;
-  border-bottom: 1px solid #ddd;
+.header-inner {
+  width: min(100% - 2rem, 1500px);
+  min-height: 82px;
+  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.brand-copy h1 {
+  font-size: clamp(1.45rem, 2vw, 2rem);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+}
+
+.brand-copy p {
+  margin-top: 0.35rem;
+  color: var(--muted);
+  font-size: 0.92rem;
 }
 
 #logo {
-  height: 65px;
+  display: block;
   width: auto;
-  display: block;
+  height: 58px;
 }
 
-/* Layout container */
+/* ---------- Main game shell ---------- */
+
+.game-shell {
+  width: min(100% - 2rem, 1500px);
+  margin: 0 auto;
+  padding: 1.5rem 0 2.5rem;
+}
+
+/* ---------- HUD ---------- */
+
+#status-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: var(--shadow-small);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.1rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.eyebrow,
+.score-label,
+.card-label,
+.result-kicker {
+  display: block;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.round-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.22rem;
+}
+
+#round-title {
+  font-size: clamp(1.1rem, 1.6vw, 1.45rem);
+  letter-spacing: -0.025em;
+  white-space: nowrap;
+}
+
+#round-progress {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.progress-dot {
+  width: 28px;
+  height: 6px;
+  border-radius: 999px;
+  background: #ddd9d5;
+  transition:
+    width 160ms ease,
+    background 160ms ease,
+    transform 160ms ease;
+}
+
+.progress-dot.complete {
+  background: var(--ink);
+}
+
+.progress-dot.current {
+  width: 38px;
+  background: var(--uc-red);
+  transform: scaleY(1.2);
+}
+
+.score-block {
+  min-width: 190px;
+  text-align: right;
+}
+
+#score-summary {
+  display: block;
+  margin-top: 0.15rem;
+  color: var(--ink);
+  font-size: clamp(1.25rem, 2vw, 1.65rem);
+  font-weight: 850;
+  letter-spacing: -0.035em;
+}
+
+/* ---------- Two-column game board ---------- */
+
 #layout {
-  display: block;
-  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(420px, 1fr);
+  gap: 1.1rem;
+  align-items: stretch;
 }
 
-/* Image panel */
-#image-panel {
-  border-right: 1px solid #ddd;
-  padding: 1rem;
-  transition: flex 0.25s ease;
+.game-card {
+  min-width: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
 }
 
-/* Map panel: small widget in bottom-right */
+#image-panel,
 #map-panel {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  width: 420px;               
-  aspect-ratio: 1140 / 641;     /* match map image */
-  padding: 0;
-  background: #f5f5f5;
-  border-radius: 4px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+  padding: 1rem;
 }
 
-/* Bigger version */
-#layout.map-big #map-panel {
-  width: 640px;
-  aspect-ratio: 1140 / 641;
+#image-panel {
+  display: flex;
+  flex-direction: column;
 }
 
-/* Map fills the panel */
-#map {
+.image-heading,
+.map-heading {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0 0.15rem 0.85rem;
+}
+
+.image-heading h3,
+.map-heading h3 {
+  margin-top: 0.15rem;
+  font-size: 1.03rem;
+  letter-spacing: -0.018em;
+}
+
+.map-heading p {
+  margin-top: 0.18rem;
+  color: var(--muted);
+  font-size: 0.84rem;
+}
+
+.image-frame {
+  flex: 1;
+  min-height: 0;
+  aspect-ratio: 4 / 3;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 10%, #fafafa 0, #efeeec 78%);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+
+#scene-image {
+  display: block;
   width: 100%;
   height: 100%;
-  max-width: none;
-  aspect-ratio: auto;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-/* Make Leaflet’s background transparent */
-.leaflet-container {
-  background: transparent !important;
-}
-
-/* Image styling */
-#image-panel img {
-  display: block;
-  max-width: 100%;
-  max-height: 70vh;
-  height: auto;
-  margin-bottom: 1rem;
-  border-radius: 4px;
+  max-height: 68vh;
   object-fit: contain;
+  transition: opacity 180ms ease;
 }
 
-/* Controls */
+#map-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.map-heading-copy {
+  min-width: 0;
+}
+
+.map-legend {
+  flex: 0 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.8rem;
+  color: var(--muted);
+  font-size: 0.76rem;
+}
+
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.legend-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.legend-dot.guess {
+  background: var(--ink);
+}
+
+.legend-dot.answer {
+  background: var(--uc-red);
+}
+
+#map {
+  flex: 1;
+  width: 100%;
+  min-height: 520px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  background: #eceae7;
+}
+
+.leaflet-container {
+  background: #eceae7 !important;
+  font-family: inherit;
+}
+
+.leaflet-control-zoom a {
+  color: var(--ink);
+}
+
+/* Branded map markers */
+.guess-marker,
+.answer-marker {
+  width: 22px;
+  height: 22px;
+  border: 3px solid #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.28);
+}
+
+.guess-marker {
+  background: var(--ink);
+}
+
+.answer-marker {
+  background: var(--uc-red);
+}
+
+/* ---------- Feedback + actions ---------- */
+
+.interaction-panel {
+  margin-top: 1.1rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: stretch;
+}
+
+#result {
+  min-height: 92px;
+  padding: 1rem 1.2rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 5px solid #c8c4bf;
+  border-radius: 16px;
+  box-shadow: var(--shadow-small);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#result[data-state="selected"] {
+  border-left-color: var(--ink);
+}
+
+#result[data-state="success"] {
+  border-left-color: var(--uc-red);
+}
+
+#result[data-state="error"] {
+  border-left-color: #8e1d2c;
+}
+
+.result-primary {
+  margin-top: 0.18rem;
+  font-size: clamp(1.05rem, 1.8vw, 1.4rem);
+  line-height: 1.2;
+  font-weight: 820;
+  letter-spacing: -0.025em;
+}
+
+.result-secondary {
+  margin-top: 0.25rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.result-secondary:empty {
+  display: none;
+}
+
 #controls {
   display: flex;
-  gap: 0.5rem;
-  margin-bottom: 0.75rem;
+  align-items: stretch;
+  gap: 0.65rem;
 }
 
-/* Buttons */
 #make-guess-btn,
 #next-image-btn,
 #restart-btn {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 4px;
-  font-weight: 600;
+  min-width: 132px;
+  min-height: 52px;
+  padding: 0.72rem 1.1rem;
+  border-radius: 13px;
+  font-weight: 800;
+  border: 1px solid transparent;
   cursor: pointer;
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease,
+    background 120ms ease,
+    opacity 120ms ease;
 }
 
 #make-guess-btn {
-  background: #ff4d4f;
-  color: white;
+  background: var(--uc-red);
+  color: #ffffff;
+  box-shadow: 0 8px 20px rgba(200, 16, 46, 0.2);
+}
+
+#make-guess-btn:not(:disabled):hover {
+  background: var(--uc-red-dark);
+  transform: translateY(-1px);
 }
 
 #next-image-btn {
-  background: #1677ff;
-  color: white;
+  background: var(--ink);
+  color: #ffffff;
+}
+
+#next-image-btn:not(:disabled):hover {
+  background: #303030;
+  transform: translateY(-1px);
 }
 
 #restart-btn {
-  background: #52c41a;
-  color: white;
+  background: var(--surface);
+  color: var(--ink);
+  border-color: #cfcac4;
+}
+
+#restart-btn:not(:disabled):hover {
+  background: #f0efed;
+  transform: translateY(-1px);
 }
 
 #make-guess-btn:disabled,
 #next-image-btn:disabled,
 #restart-btn:disabled {
-  opacity: 0.6;
+  opacity: 0.34;
   cursor: default;
+  box-shadow: none;
 }
 
-/* Score + result text styles */
-#score-summary {
-  font-size: 1.05rem;
-  margin-bottom: 0.5rem;
-  font-weight: 700;
-  color: #111827;
-  border-left: 4px solid #1677ff;  
-  padding-left: 0.5rem;
+/* ---------- Responsive ---------- */
+
+@media (max-width: 1080px) {
+  #layout {
+    grid-template-columns: 1fr;
+  }
+
+  #map {
+    min-height: 460px;
+  }
+
+  .interaction-panel {
+    grid-template-columns: 1fr;
+  }
+
+  #controls {
+    justify-content: flex-end;
+  }
 }
 
-#result {
-  font-size: 0.95rem;
-  color: #4b5563;     
-  line-height: 1.4;
-}
+@media (max-width: 680px) {
+  .header-inner,
+  .game-shell {
+    width: min(100% - 1rem, 1500px);
+  }
 
-/* end of styles.css */
+  .header-inner {
+    min-height: 72px;
+  }
+
+  .brand-copy p {
+    display: none;
+  }
+
+  #logo {
+    height: 48px;
+  }
+
+  #status-panel {
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .round-row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  .progress-dot {
+    width: 20px;
+  }
+
+  .progress-dot.current {
+    width: 28px;
+  }
+
+  .score-block {
+    min-width: 0;
+  }
+
+  #map {
+    min-height: 360px;
+  }
+
+  .map-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .map-legend {
+    justify-content: flex-start;
+  }
+
+  #controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  #make-guess-btn,
+  #next-image-btn,
+  #restart-btn {
+    min-width: 0;
+  }
+
+  #restart-btn {
+    grid-column: 1 / -1;
+  }
+}

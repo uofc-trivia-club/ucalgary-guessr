@@ -1,18 +1,24 @@
 // public/js/main.js
 
-import { 
-  getRandomRound, 
-  submitGuess 
+import {
+  getRandomRound,
+  submitGuess,
 } from "./api.js";
+
 import {
   setResultText,
+  setResultCard,
+  showGuessSelected,
+  showGuessResult,
   enableLockButton,
   enableNextButton,
   setRoundTitle,
+  setRoundProgress,
   setSceneImage,
   updateScoreSummary,
   showRestartButton,
 } from "./ui.js";
+
 import {
   getUnusedImages,
   rememberImagesUsed,
@@ -28,6 +34,7 @@ import {
   getLastGuess,
   clearLastGuess,
 } from "./gameState.js";
+
 import {
   initMap,
   clearGuessAndAnswer,
@@ -45,39 +52,63 @@ async function loadRandomRound() {
 
     for (let attempt = 0; attempt < MAX_TRIES; attempt++) {
       const candidate = await getRandomRound();
-      if (!candidate || !Array.isArray(candidate.images)) continue;
+
+      if (!candidate || !Array.isArray(candidate.images)) {
+        continue;
+      }
 
       const newImages = getUnusedImages(candidate.images);
+
       if (newImages.length > 0) {
-        round = { ...candidate, images: newImages };
+        round = {
+          ...candidate,
+          images: newImages,
+        };
+
         filteredImages = newImages;
         break;
       }
     }
 
-    // Fallback if we can't find any unused images
+    // Fallback if we can't find unused images.
     if (!round) {
       console.warn(
         "Could not find a round with unused images after several attempts."
       );
+
       round = await getRandomRound();
-      if (!round || !Array.isArray(round.images) || round.images.length === 0) {
-        setResultText("No images available.");
+
+      if (
+        !round ||
+        !Array.isArray(round.images) ||
+        round.images.length === 0
+      ) {
+        setResultText("No images available.", "error");
         return;
       }
+
       filteredImages = round.images;
     }
 
     rememberImagesUsed(filteredImages);
+
     setRound(round);
     clearLastGuess();
+
     showRestartButton(false);
-    updateScoreSummary(getTotalScore(), getRoundMaxScore());
+    updateScoreSummary(
+      getTotalScore(),
+      getRoundMaxScore()
+    );
 
     loadCurrentImage();
   } catch (err) {
     console.error("loadRandomRound error:", err);
-    setResultText("Failed to load round.");
+
+    setResultText(
+      "Failed to load a round.",
+      "error"
+    );
   }
 }
 
@@ -86,60 +117,123 @@ function loadCurrentImage() {
   const imgInfo = getCurrentImage();
 
   if (!round || !imgInfo) {
-    setResultText("No images found in this round.");
+    setResultText(
+      "No images found in this round.",
+      "error"
+    );
     return;
   }
 
-  // compute "Round X/Y"
-  const idx = round.images.findIndex((img) => img.id === imgInfo.id);
-  const currentNumber = idx >= 0 ? idx + 1 : 1;
-  const total = round.images.length;
-  setRoundTitle(`Round ${currentNumber}/${total}`);
+  const idx = round.images.findIndex(
+    (img) => img.id === imgInfo.id
+  );
 
-  setSceneImage(imgInfo.imagePath);
-  setResultText("Click on the map to place your guess.");
+  const currentNumber =
+    idx >= 0 ? idx + 1 : 1;
+
+  const total = round.images.length;
+
+  setRoundTitle(
+    `Round ${currentNumber} of ${total}`
+  );
+
+  setRoundProgress(
+    currentNumber,
+    total
+  );
+
+  setSceneImage(
+    imgInfo.imagePath
+  );
+
+  setResultCard({
+    kicker: "Your turn",
+    primary: "Click the map to place your guess.",
+    secondary:
+      "You can move your marker before locking it in.",
+    state: "prompt",
+  });
+
   clearLastGuess();
   clearGuessAndAnswer();
+
   enableLockButton(false);
   enableNextButton(false);
+
+  // The map may have changed dimensions
+  // after the layout/image update.
+  requestAnimationFrame(() => {
+    invalidateMapSize();
+  });
 }
 
 async function onLockGuess() {
   const round = getCurrentRound();
-  if (!round) return;
+
+  if (!round) {
+    return;
+  }
 
   const lastGuess = getLastGuess();
+
   if (!lastGuess) {
-    setResultText("Click on the map to place a guess first.");
+    setResultCard({
+      kicker: "No guess yet",
+      primary: "Click the map first.",
+      secondary:
+        "Place a marker anywhere on campus, then make your guess.",
+      state: "error",
+    });
+
     return;
   }
 
   const imgInfo = getCurrentImage();
-  if (!imgInfo) return;
+
+  if (!imgInfo) {
+    return;
+  }
 
   try {
-    const result = await submitGuess(round.roundId, imgInfo.id, lastGuess);
-    console.log("Guess result:", result);
+    const result = await submitGuess(
+      round.roundId,
+      imgInfo.id,
+      lastGuess
+    );
 
-    const { distancePx, score, answer } = result;
+    console.log(
+      "Guess result:",
+      result
+    );
+
+    const {
+      distancePx,
+      score,
+      answer,
+    } = result;
+
     addScore(score);
-    updateScoreSummary(getTotalScore(), getRoundMaxScore());
 
-    // Show markers + line on the map
+    updateScoreSummary(
+      getTotalScore(),
+      getRoundMaxScore()
+    );
+
     showAnswerOnMap(answer);
 
-    const last = isLastImage();
-    const maxScore = getRoundMaxScore();
+    const last =
+      isLastImage();
 
-    let message = `You were ${distancePx.toFixed(
-      0
-    )} pixels away and scored ${score} points.`;
+    const maxScore =
+      getRoundMaxScore();
 
-    if (last) {
-      message += ` Round complete! Final score: ${getTotalScore()} / ${maxScore}. Thanks for playing 🎉`;
-    }
-
-    setResultText(message);
+    showGuessResult({
+      score,
+      distancePx,
+      totalScore: getTotalScore(),
+      maxScore,
+      isFinal: last,
+    });
 
     enableLockButton(false);
 
@@ -150,16 +244,28 @@ async function onLockGuess() {
       enableNextButton(true);
     }
   } catch (err) {
-    console.error("onLockGuess error:", err);
-    setResultText("Error submitting guess.");
+    console.error(
+      "onLockGuess error:",
+      err
+    );
+
+    setResultText(
+      "Your guess could not be submitted.",
+      "error"
+    );
   }
 }
 
 function onNextImage() {
-  const round = getCurrentRound();
-  if (!round) return;
+  const round =
+    getCurrentRound();
 
-  if (isLastImage()) return;
+  if (
+    !round ||
+    isLastImage()
+  ) {
+    return;
+  }
 
   incrementImageIndex();
   loadCurrentImage();
@@ -168,59 +274,71 @@ function onNextImage() {
 function onRestart() {
   clearGuessAndAnswer();
   clearLastGuess();
-  setResultText("");
   loadRandomRound();
 }
 
 // ---------- Bootstrapping ----------
 
-window.addEventListener("DOMContentLoaded", () => {
-  // Initialise map and wire click → lastGuess
-  initMap((xy) => {
-    setLastGuess(xy);
-    setResultText(
-      `Guess at x=${xy.x.toFixed(0)}, y=${xy.y.toFixed(0)}.`
+window.addEventListener(
+  "DOMContentLoaded",
+  () => {
+    initMap((xy) => {
+      setLastGuess(xy);
+
+      showGuessSelected();
+
+      enableLockButton(true);
+    });
+
+    const lockBtn =
+      document.getElementById(
+        "make-guess-btn"
+      );
+
+    const nextBtn =
+      document.getElementById(
+        "next-image-btn"
+      );
+
+    const restartBtn =
+      document.getElementById(
+        "restart-btn"
+      );
+
+    if (lockBtn) {
+      lockBtn.addEventListener(
+        "click",
+        onLockGuess
+      );
+
+      enableLockButton(false);
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener(
+        "click",
+        onNextImage
+      );
+
+      enableNextButton(false);
+    }
+
+    if (restartBtn) {
+      restartBtn.addEventListener(
+        "click",
+        onRestart
+      );
+
+      showRestartButton(false);
+    }
+
+    window.addEventListener(
+      "resize",
+      () => {
+        invalidateMapSize();
+      }
     );
-    enableLockButton(true);
-  });
 
-  const lockBtn = document.getElementById("make-guess-btn");
-  const nextBtn = document.getElementById("next-image-btn");
-  const restartBtn = document.getElementById("restart-btn");
-  const layout = document.getElementById("layout");
-  const mapPanel = document.getElementById("map-panel");
-
-  if (lockBtn) {
-    lockBtn.addEventListener("click", onLockGuess);
-    enableLockButton(false);
+    loadRandomRound();
   }
-
-  if (nextBtn) {
-    nextBtn.addEventListener("click", onNextImage);
-    enableNextButton(false);
-  }
-
-  if (restartBtn) {
-    restartBtn.addEventListener("click", onRestart);
-    showRestartButton(false);
-  }
-
-  // Hover-to-grow map
-  if (layout && mapPanel) {
-    mapPanel.addEventListener("mouseenter", () => {
-      layout.classList.add("map-big");
-      setTimeout(() => {
-        invalidateMapSize();
-      }, 260);
-    });
-
-    mapPanel.addEventListener("mouseleave", () => {
-      layout.classList.remove("map-big");
-      setTimeout(() => {
-        invalidateMapSize();
-      }, 260);
-    });
-  }
-
-  loadRandomRound();
-});
+);

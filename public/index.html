@@ -2,9 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="UCalgary Guessr — test how well you know the University of Calgary campus."
+    />
     <title>UCalgary Guessr</title>
 
-    <!-- Leaflet CSS -->
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -16,31 +20,94 @@
   </head>
   <body>
     <div id="app">
-      <header>
-        <h1>UCalgary Guessr</h1>
-        <img id="logo" src="/assets/logos/logo.png" alt="UCalgary Trivia Club logo" />
+      <header class="site-header">
+        <div class="header-inner">
+          <div class="brand-copy">
+            <h1>UCalgary Guessr</h1>
+            <p>How well do you know campus?</p>
+          </div>
+
+          <img
+            id="logo"
+            src="/assets/logos/logo.png"
+            alt="UCalgary Trivia Club logo"
+          />
+        </div>
       </header>
 
-      <div id="status-panel">
-        <div id="score-summary">Total score: 0</div>
-        <div id="result"></div>
-      </div>
+      <main class="game-shell">
+        <section id="status-panel" aria-label="Game progress">
+          <div class="round-status">
+            <span class="eyebrow">Campus challenge</span>
 
-      <main id="layout">
-        <section id="image-panel">
-          <h2 id="round-title">Round</h2>
+            <div class="round-row">
+              <h2 id="round-title">Round 1 of 5</h2>
+              <div
+                id="round-progress"
+                aria-label="Round progress"
+                role="img"
+              ></div>
+            </div>
+          </div>
 
-          <img id="scene-image" src="" alt="Campus scene" />
+          <div class="score-block">
+            <span class="score-label">Total score</span>
+            <strong id="score-summary">0 / 25,000</strong>
+          </div>
+        </section>
+
+        <section id="layout">
+          <article id="image-panel" class="game-card">
+            <div class="image-heading">
+              <div>
+                <span class="card-label">Photo</span>
+                <h3>Where was this taken?</h3>
+              </div>
+            </div>
+
+            <div class="image-frame">
+              <img id="scene-image" src="" alt="Campus scene" />
+            </div>
+          </article>
+
+          <article id="map-panel" class="game-card">
+            <div class="map-heading">
+              <div class="map-heading-copy">
+                <span class="card-label">Campus map</span>
+                <h3>Place your guess</h3>
+                <p>Click anywhere on the map. Click again to adjust.</p>
+              </div>
+
+              <div class="map-legend" aria-label="Map marker legend">
+                <span class="legend-item">
+                  <span class="legend-dot guess"></span>
+                  Your guess
+                </span>
+                <span class="legend-item">
+                  <span class="legend-dot answer"></span>
+                  Answer
+                </span>
+              </div>
+            </div>
+
+            <div id="map" aria-label="University of Calgary campus map"></div>
+          </article>
+        </section>
+
+        <section class="interaction-panel" aria-label="Round controls">
+          <div id="result" data-state="prompt" aria-live="polite">
+            <span id="result-kicker" class="result-kicker">Ready?</span>
+            <div id="result-primary" class="result-primary">
+              Click the map to place your guess.
+            </div>
+            <div id="result-secondary" class="result-secondary"></div>
+          </div>
 
           <div id="controls">
             <button id="make-guess-btn">Make guess</button>
             <button id="next-image-btn">Next image</button>
-            <button id="restart-btn" style="display: none;">Restart</button>
+            <button id="restart-btn" style="display: none;">Play again</button>
           </div>
-        </section>
-
-        <section id="map-panel">
-          <div id="map"></div>
         </section>
       </main>
     </div>

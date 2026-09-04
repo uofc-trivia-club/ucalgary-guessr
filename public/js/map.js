@@ -1,12 +1,13 @@
 // public/js/map.js
 
-// Leaflet is loaded globally via <script> in index.html
+// Leaflet is loaded globally
+// via <script> in index.html.
 let mapInstance = null;
 let guessMarker = null;
 let answerMarker = null;
 let lineLayer = null;
 
-// Match ucalgary-campus.png dimensions
+// Match ucalgary-campus.png dimensions.
 const IMAGE_WIDTH = 1140;
 const IMAGE_HEIGHT = 641;
 
@@ -20,57 +21,146 @@ function latLngToXY(latlng) {
 }
 
 function xyToLatLng(x, y) {
-  return L.latLng(y, x);
+  return L.latLng(
+    y,
+    x
+  );
 }
 
-// Callback that receives { x, y } in image coordinates
-export function initMap(onGuessPlaced) {
-  const southWest = L.latLng(0, 0);
-  const northEast = L.latLng(IMAGE_HEIGHT, IMAGE_WIDTH);
-  const bounds = L.latLngBounds(southWest, northEast);
+function makeMarkerIcon(
+  className
+) {
+  return L.divIcon({
+    className: "",
+
+    html:
+      `<div class="${className}"></div>`,
+
+    iconSize: [22, 22],
+    iconAnchor: [11, 11],
+  });
+}
+
+// Callback receives { x, y }
+// in image coordinates.
+export function initMap(
+  onGuessPlaced
+) {
+  const southWest =
+    L.latLng(0, 0);
+
+  const northEast =
+    L.latLng(
+      IMAGE_HEIGHT,
+      IMAGE_WIDTH
+    );
+
+  const bounds =
+    L.latLngBounds(
+      southWest,
+      northEast
+    );
 
   imageBounds = bounds;
 
-  mapInstance = L.map("map", {
-    crs: L.CRS.Simple,
-    minZoom: -1,
-    maxZoom: 2,
-  });
+  mapInstance =
+    L.map("map", {
+      crs: L.CRS.Simple,
+      minZoom: -1,
+      maxZoom: 2,
+      zoomControl: true,
+      attributionControl: true,
+    });
 
-  const imageUrl = "/assets/maps/ucalgary-campus.png";
-  L.imageOverlay(imageUrl, bounds).addTo(mapInstance);
+  const imageUrl =
+    "/assets/maps/ucalgary-campus.png";
 
-  mapInstance.fitBounds(bounds);
+  L.imageOverlay(
+    imageUrl,
+    bounds
+  ).addTo(mapInstance);
 
-  mapInstance.on("click", (e) => {
-    placeGuessMarker(e.latlng);
-    if (typeof onGuessPlaced === "function") {
-      const xy = latLngToXY(e.latlng);
-      onGuessPlaced(xy);
+  mapInstance.fitBounds(
+    bounds
+  );
+
+  mapInstance.on(
+    "click",
+    (e) => {
+      placeGuessMarker(
+        e.latlng
+      );
+
+      if (
+        typeof onGuessPlaced ===
+        "function"
+      ) {
+        const xy =
+          latLngToXY(
+            e.latlng
+          );
+
+        onGuessPlaced(xy);
+      }
     }
+  );
+
+  // Leaflet can initialise before
+  // CSS layout has fully settled.
+  requestAnimationFrame(() => {
+    mapInstance.invalidateSize();
+
+    mapInstance.fitBounds(
+      bounds
+    );
   });
 }
 
-function placeGuessMarker(latlng) {
-  if (!mapInstance) return;
+function placeGuessMarker(
+  latlng
+) {
+  if (!mapInstance) {
+    return;
+  }
 
   if (!guessMarker) {
-    guessMarker = L.marker(latlng).addTo(mapInstance);
+    guessMarker =
+      L.marker(
+        latlng,
+        {
+          icon:
+            makeMarkerIcon(
+              "guess-marker"
+            ),
+        }
+      ).addTo(
+        mapInstance
+      );
   } else {
-    guessMarker.setLatLng(latlng);
+    guessMarker.setLatLng(
+      latlng
+    );
   }
 }
 
 export function clearGuessAndAnswer() {
   if (mapInstance) {
     if (guessMarker) {
-      mapInstance.removeLayer(guessMarker);
+      mapInstance.removeLayer(
+        guessMarker
+      );
     }
+
     if (answerMarker) {
-      mapInstance.removeLayer(answerMarker);
+      mapInstance.removeLayer(
+        answerMarker
+      );
     }
+
     if (lineLayer) {
-      mapInstance.removeLayer(lineLayer);
+      mapInstance.removeLayer(
+        lineLayer
+      );
     }
   }
 
@@ -79,34 +169,78 @@ export function clearGuessAndAnswer() {
   lineLayer = null;
 }
 
-export function showAnswerOnMap(answer) {
-  // answer is { x, y } in image coordinates
-  if (!mapInstance || !answer) return;
+export function showAnswerOnMap(
+  answer
+) {
+  // answer is { x, y }
+  // in image coordinates.
+  if (
+    !mapInstance ||
+    !answer
+  ) {
+    return;
+  }
 
-  const answerLatLng = xyToLatLng(answer.x, answer.y);
+  const answerLatLng =
+    xyToLatLng(
+      answer.x,
+      answer.y
+    );
 
   if (!answerMarker) {
-    answerMarker = L.marker(answerLatLng).addTo(mapInstance);
+    answerMarker =
+      L.marker(
+        answerLatLng,
+        {
+          icon:
+            makeMarkerIcon(
+              "answer-marker"
+            ),
+        }
+      ).addTo(
+        mapInstance
+      );
   } else {
-    answerMarker.setLatLng(answerLatLng);
+    answerMarker.setLatLng(
+      answerLatLng
+    );
   }
 
   if (guessMarker) {
     if (lineLayer) {
-      mapInstance.removeLayer(lineLayer);
+      mapInstance.removeLayer(
+        lineLayer
+      );
     }
-    lineLayer = L.polyline(
-      [guessMarker.getLatLng(), answerLatLng],
-      {}
-    ).addTo(mapInstance);
+
+    lineLayer =
+      L.polyline(
+        [
+          guessMarker.getLatLng(),
+          answerLatLng,
+        ],
+        {
+          color: "#c8102e",
+          weight: 3,
+          opacity: 0.82,
+          dashArray: "8 8",
+        }
+      ).addTo(
+        mapInstance
+      );
   }
 }
 
 export function invalidateMapSize() {
-  if (mapInstance) {
-    mapInstance.invalidateSize();
-    if (imageBounds) {
-      mapInstance.fitBounds(imageBounds);
-    }
+  if (!mapInstance) {
+    return;
+  }
+
+  mapInstance.invalidateSize();
+
+  if (imageBounds) {
+    mapInstance.fitBounds(
+      imageBounds
+    );
   }
 }
