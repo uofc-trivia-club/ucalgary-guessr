@@ -1,0 +1,959 @@
+{
+  "source": "https://services5.arcgis.com/oegdSE8JU1e7fUHu/arcgis/rest/services/UC_Buildings/FeatureServer/0",
+  "retrievedAt": "2026-10-10",
+  "coordinateSource": "Polygon centroids returned by returnCentroid=true, outSR=4326",
+  "buildings": [
+    {
+      "id": "1",
+      "code": "AD",
+      "name": "Administration",
+      "latitude": 51.07818792,
+      "longitude": -114.12710165
+    },
+    {
+      "id": "2",
+      "code": "AB",
+      "name": "Arts Building and Parkade",
+      "latitude": 51.0754273,
+      "longitude": -114.1301239
+    },
+    {
+      "id": "3",
+      "code": "BI",
+      "name": "Biological Sciences",
+      "latitude": 51.07993429,
+      "longitude": -114.1256099
+    },
+    {
+      "id": "4",
+      "code": "CC",
+      "name": "Childcare Centre",
+      "latitude": 51.07835064,
+      "longitude": -114.12460404
+    },
+    {
+      "id": "5",
+      "code": "CCIT",
+      "name": "Calgary Centre for Innovative Technology",
+      "latitude": 51.080351,
+      "longitude": -114.13352661
+    },
+    {
+      "id": "6",
+      "code": "CD",
+      "name": "Cascade Hall",
+      "latitude": 51.07600582,
+      "longitude": -114.13744486
+    },
+    {
+      "id": "7",
+      "code": "CDC",
+      "name": "Child Development Centre",
+      "latitude": 51.07476321,
+      "longitude": -114.14392552
+    },
+    {
+      "id": "8",
+      "code": "CHC",
+      "name": "Craigie Hall Block C",
+      "latitude": 51.07669526,
+      "longitude": -114.1291117
+    },
+    {
+      "id": "9",
+      "code": "CHD",
+      "name": "Craigie Hall Block D",
+      "latitude": 51.0764456,
+      "longitude": -114.12959274
+    },
+    {
+      "id": "10",
+      "code": "CHE",
+      "name": "Craigie Hall Block E",
+      "latitude": 51.07645785,
+      "longitude": -114.13018768
+    },
+    {
+      "id": "11",
+      "code": "CHF",
+      "name": "Craigie Hall Block F",
+      "latitude": 51.07687389,
+      "longitude": -114.13066022
+    },
+    {
+      "id": "12",
+      "code": "CHG",
+      "name": "Craigie Hall Block G",
+      "latitude": 51.0770427,
+      "longitude": -114.13018883
+    },
+    {
+      "id": "13",
+      "code": "CSB",
+      "name": "Clinical Skills Building",
+      "latitude": 51.16002788,
+      "longitude": -114.21690201
+    },
+    {
+      "id": "14",
+      "code": "DC",
+      "name": "Dining Centre",
+      "latitude": 51.07582825,
+      "longitude": -114.13344595
+    },
+    {
+      "id": "15",
+      "code": "DTC",
+      "name": "Downtown Campus",
+      "latitude": 51.04636503,
+      "longitude": -114.0821271
+    },
+    {
+      "id": "16",
+      "code": "EDC",
+      "name": "Education Classroom Block",
+      "latitude": 51.07672112,
+      "longitude": -114.1265515
+    },
+    {
+      "id": "17",
+      "code": "EDT",
+      "name": "Education Tower",
+      "latitude": 51.07707392,
+      "longitude": -114.12599993
+    },
+    {
+      "id": "18",
+      "code": "EEEL",
+      "name": "Energy Environment Experiential Learning",
+      "latitude": 51.08107265,
+      "longitude": -114.12946261
+    },
+    {
+      "id": "19",
+      "code": "ENA",
+      "name": "Engineering Block A",
+      "latitude": 51.08029647,
+      "longitude": -114.13142676
+    },
+    {
+      "id": "20",
+      "code": "ENB",
+      "name": "Engineering Block B",
+      "latitude": 51.08068408,
+      "longitude": -114.13152521
+    },
+    {
+      "id": "21",
+      "code": "ENC",
+      "name": "Engineering Block C",
+      "latitude": 51.08084054,
+      "longitude": -114.13189756
+    },
+    {
+      "id": "22",
+      "code": "END",
+      "name": "Engineering Block D",
+      "latitude": 51.08053377,
+      "longitude": -114.13258033
+    },
+    {
+      "id": "23",
+      "code": "ENE",
+      "name": "Engineering Block E",
+      "latitude": 51.07994458,
+      "longitude": -114.13249381
+    },
+    {
+      "id": "24",
+      "code": "ENF",
+      "name": "Engineering Block F",
+      "latitude": 51.07942133,
+      "longitude": -114.13254922
+    },
+    {
+      "id": "25",
+      "code": "ERR",
+      "name": "Energy Resources Research Building",
+      "latitude": 51.08385591,
+      "longitude": -114.13351223
+    },
+    {
+      "id": "26",
+      "code": "ES",
+      "name": "Earth Sciences",
+      "latitude": 51.08017725,
+      "longitude": -114.12908415
+    },
+    {
+      "id": "27",
+      "code": "GA",
+      "name": "Spy Hill Garage",
+      "latitude": 51.15816245,
+      "longitude": -114.21353375
+    },
+    {
+      "id": "28",
+      "code": "GL",
+      "name": "Glacier Hall",
+      "latitude": 51.07566085,
+      "longitude": -114.13597102
+    },
+    {
+      "id": "29",
+      "code": "GR",
+      "name": "Grounds Building",
+      "latitude": 51.07945951,
+      "longitude": -114.14075371
+    },
+    {
+      "id": "30",
+      "code": "GS",
+      "name": "General Services Building",
+      "latitude": 51.07623387,
+      "longitude": -114.14405114
+    },
+    {
+      "id": "31",
+      "code": "HDL",
+      "name": "Taylor Family High Density Library",
+      "latitude": 51.15952539,
+      "longitude": -114.21447205
+    },
+    {
+      "id": "32",
+      "code": "HMRB",
+      "name": "Heritage Medical Research Building",
+      "latitude": 51.06668123,
+      "longitude": -114.1341194
+    },
+    {
+      "id": "33",
+      "code": "HP",
+      "name": "Heating Plant",
+      "latitude": 51.07501235,
+      "longitude": -114.13871901
+    },
+    {
+      "id": "34",
+      "code": "HRIC",
+      "name": "Health Research Innovation Centre",
+      "latitude": 51.06638824,
+      "longitude": -114.13532269
+    },
+    {
+      "id": "35",
+      "code": "HSC",
+      "name": "Health Sciences Centre",
+      "latitude": 51.06602342,
+      "longitude": -114.1342339
+    },
+    {
+      "id": "36",
+      "code": "ICT",
+      "name": "Information and Communication Technology",
+      "latitude": 51.08020255,
+      "longitude": -114.13035595
+    },
+    {
+      "id": "37",
+      "code": "IH",
+      "name": "International House",
+      "latitude": 51.07615825,
+      "longitude": -114.13279343
+    },
+    {
+      "id": "38",
+      "code": "KA",
+      "name": "Kananaskis Hall",
+      "latitude": 51.07536167,
+      "longitude": -114.13476052
+    },
+    {
+      "id": "40",
+      "code": "KFL",
+      "name": "KC-Forestry Lodge",
+      "latitude": 51.02887803,
+      "longitude": -115.03405798
+    },
+    {
+      "id": "41",
+      "code": "KFO",
+      "name": "KC-Forestry Office",
+      "latitude": 51.0286618,
+      "longitude": -115.03466006
+    },
+    {
+      "id": "42",
+      "code": "KKG",
+      "name": "KC-Garage",
+      "latitude": 51.0275937,
+      "longitude": -115.03396685
+    },
+    {
+      "id": "43",
+      "code": "KLS",
+      "name": "KC-Lift Station",
+      "latitude": 51.02950519,
+      "longitude": -115.03464482
+    },
+    {
+      "id": "44",
+      "code": "KML",
+      "name": "KC-Main Lodge",
+      "latitude": 51.02726435,
+      "longitude": -115.03386884
+    },
+    {
+      "id": "45",
+      "code": "KNA",
+      "name": "Kinesiology Block A",
+      "latitude": 51.07712939,
+      "longitude": -114.13296332
+    },
+    {
+      "id": "46",
+      "code": "KNB",
+      "name": "Kinesiology Block B",
+      "latitude": 51.07795659,
+      "longitude": -114.13374001
+    },
+    {
+      "id": "47",
+      "code": "KNO",
+      "name": "KC-North Shop",
+      "latitude": 51.02847323,
+      "longitude": -115.03372454
+    },
+    {
+      "id": "48",
+      "code": "KPH",
+      "name": "KC-Pump House",
+      "latitude": 51.02688642,
+      "longitude": -115.03291765
+    },
+    {
+      "id": "49",
+      "code": "KRG",
+      "name": "KC-Kananaskis Duplex 3",
+      "latitude": 51.02662231,
+      "longitude": -115.03416416
+    },
+    {
+      "id": "50",
+      "code": "KRH",
+      "name": "KC-Kananaskis Duplex 4",
+      "latitude": 51.02680736,
+      "longitude": -115.03447349
+    },
+    {
+      "id": "51",
+      "code": "KRIC",
+      "name": "KC-Interpreters Cabin",
+      "latitude": 51.02943226,
+      "longitude": -115.03362472
+    },
+    {
+      "id": "52",
+      "code": "KRJ",
+      "name": "KC-Residence",
+      "latitude": 51.02913992,
+      "longitude": -115.03227387
+    },
+    {
+      "id": "53",
+      "code": "KRK",
+      "name": "KC-Site Manager",
+      "latitude": 51.02907151,
+      "longitude": -115.03192747
+    },
+    {
+      "id": "55",
+      "code": "KUB",
+      "name": "KC- Utility Building",
+      "latitude": 51.02941287,
+      "longitude": -115.03395048
+    },
+    {
+      "id": "56",
+      "code": "MSC",
+      "name": "MacEwan Student Centre",
+      "latitude": 51.07820182,
+      "longitude": -114.1317484
+    },
+    {
+      "id": "57",
+      "code": "MEB",
+      "name": "Mechanical Engineering Building",
+      "latitude": 51.08227038,
+      "longitude": -114.1301611
+    },
+    {
+      "id": "58",
+      "code": "MF",
+      "name": "Material Handling Facility",
+      "latitude": 51.07640117,
+      "longitude": -114.14325238
+    },
+    {
+      "id": "59",
+      "code": "MFH",
+      "name": "Murray Fraser Hall",
+      "latitude": 51.07706237,
+      "longitude": -114.12832517
+    },
+    {
+      "id": "61",
+      "code": "MS",
+      "name": "Mathematical Sciences",
+      "latitude": 51.07999036,
+      "longitude": -114.12786776
+    },
+    {
+      "id": "62",
+      "code": "OVC",
+      "name": "Olympic Volunteer Centre",
+      "latitude": 51.07138762,
+      "longitude": -114.12219246
+    },
+    {
+      "id": "63",
+      "code": "OL",
+      "name": "Olympus Hall",
+      "latitude": 51.07500884,
+      "longitude": -114.13573118
+    },
+    {
+      "id": "64",
+      "code": "PF",
+      "name": "Professional Faculties",
+      "latitude": 51.07739547,
+      "longitude": -114.12694257
+    },
+    {
+      "id": "65",
+      "code": "RAOL",
+      "name": "Rothney Astrophysical Observatory Lab",
+      "latitude": 50.86810437,
+      "longitude": -114.29094773
+    },
+    {
+      "id": "66",
+      "code": "RAOIC",
+      "name": "Rothney Astrophysical Observatory Interpretive Centre",
+      "latitude": 50.86845527,
+      "longitude": -114.29133313
+    },
+    {
+      "id": "67",
+      "code": "PP",
+      "name": "Physical Plant",
+      "latitude": 51.07519454,
+      "longitude": -114.14326293
+    },
+    {
+      "id": "68",
+      "code": "PS",
+      "name": "Bow River Pump Station",
+      "latitude": 51.05719545,
+      "longitude": -114.14154918
+    },
+    {
+      "id": "69",
+      "code": "RC",
+      "name": "Rozsa Centre",
+      "latitude": 51.07638246,
+      "longitude": -114.13149132
+    },
+    {
+      "id": "70",
+      "code": "WRS",
+      "name": "Weather Research Station",
+      "latitude": 51.15799981,
+      "longitude": -114.21361777
+    },
+    {
+      "id": "71",
+      "code": "RT",
+      "name": "Reeve Theatre",
+      "latitude": 51.07628802,
+      "longitude": -114.13079853
+    },
+    {
+      "id": "72",
+      "code": "RU",
+      "name": "Rundle Hall",
+      "latitude": 51.07503146,
+      "longitude": -114.13278984
+    },
+    {
+      "id": "73",
+      "code": "SA",
+      "name": "Science A",
+      "latitude": 51.07913657,
+      "longitude": -114.12818583
+    },
+    {
+      "id": "74",
+      "code": "SB",
+      "name": "Science B",
+      "latitude": 51.07938608,
+      "longitude": -114.1294413
+    },
+    {
+      "id": "75",
+      "code": "SH",
+      "name": "Scurfield Hall",
+      "latitude": 51.07736081,
+      "longitude": -114.12476212
+    },
+    {
+      "id": "76",
+      "code": "SS",
+      "name": "Social Sciences",
+      "latitude": 51.07913269,
+      "longitude": -114.12695816
+    },
+    {
+      "id": "77",
+      "code": "ST",
+      "name": "Science Theatres",
+      "latitude": 51.07962186,
+      "longitude": -114.12716548
+    },
+    {
+      "id": "78",
+      "code": "SW20",
+      "name": "Electrical Switch Station #1",
+      "latitude": 51.07460508,
+      "longitude": -114.13179219
+    },
+    {
+      "id": "79",
+      "code": "TFDL",
+      "name": "Taylor Family Digital Library",
+      "latitude": 51.07745172,
+      "longitude": -114.12989818
+    },
+    {
+      "id": "81",
+      "code": "TRB",
+      "name": "Trailer B - Math Sciences",
+      "latitude": 51.08030422,
+      "longitude": -114.12811191
+    },
+    {
+      "id": "82",
+      "code": "CWPH",
+      "name": "Cal Wenzel Precision Health Building",
+      "latitude": 51.06638971,
+      "longitude": -114.13613238
+    },
+    {
+      "id": "83",
+      "code": "URC",
+      "name": "University Research Centre",
+      "latitude": 51.08510265,
+      "longitude": -114.13590684
+    },
+    {
+      "id": "84",
+      "code": "VSRS",
+      "name": "Veterinary Science Research Station",
+      "latitude": 51.1583216,
+      "longitude": -114.21479845
+    },
+    {
+      "id": "86",
+      "code": "YA",
+      "name": "Yamnuska Hall",
+      "latitude": 51.07506394,
+      "longitude": -114.13724003
+    },
+    {
+      "id": "87",
+      "code": "CSSH",
+      "name": "Cenovus Spo'pi Solar House",
+      "latitude": 51.0797563,
+      "longitude": -114.13365447
+    },
+    {
+      "id": "88",
+      "code": "SW68",
+      "name": "Electrical Switch Station #2",
+      "latitude": 51.08101489,
+      "longitude": -114.13462036
+    },
+    {
+      "id": "89",
+      "code": "OO",
+      "name": "Olympic Oval",
+      "latitude": 51.07702908,
+      "longitude": -114.13571018
+    },
+    {
+      "id": "90",
+      "code": "MM",
+      "name": "McMahon Stadium",
+      "latitude": 51.07029552,
+      "longitude": -114.12138273
+    },
+    {
+      "id": "91",
+      "code": "KRF",
+      "name": "KC-Kananaskis Duplex 2",
+      "latitude": 51.02681863,
+      "longitude": -115.03387848
+    },
+    {
+      "id": "92",
+      "code": "CR",
+      "name": "Crowsnest Hall",
+      "latitude": 51.0791777,
+      "longitude": -114.13493205
+    },
+    {
+      "id": "93",
+      "code": "TI",
+      "name": "Taylor Institute for Teaching and Learning",
+      "latitude": 51.07911839,
+      "longitude": -114.13122994
+    },
+    {
+      "id": "94",
+      "code": "AU",
+      "name": "Aurora Hall",
+      "latitude": 51.07492153,
+      "longitude": -114.13412125
+    },
+    {
+      "id": "95",
+      "code": "ENG",
+      "name": "Engineering Block G",
+      "latitude": 51.08028627,
+      "longitude": -114.13200338
+    },
+    {
+      "id": "96",
+      "code": "CMT",
+      "name": "Clark-Milone Telescope Dome",
+      "latitude": 50.86835772,
+      "longitude": -114.29099984
+    },
+    {
+      "id": "100",
+      "code": "KRE",
+      "name": "KC-Kananaskis Duplex 1",
+      "latitude": 51.02736731,
+      "longitude": -115.03311509
+    },
+    {
+      "id": "101",
+      "code": "KRI",
+      "name": "KC-Kananaskis Duplex 5",
+      "latitude": 51.02715728,
+      "longitude": -115.03321072
+    },
+    {
+      "id": "102",
+      "code": "KSB",
+      "name": "KC-Science Station Lab",
+      "latitude": 51.02770418,
+      "longitude": -115.03430743
+    },
+    {
+      "id": "103",
+      "code": "QB",
+      "name": "Quarantine Barn",
+      "latitude": 51.15878631,
+      "longitude": -114.21617785
+    },
+    {
+      "id": "105",
+      "code": "ACH",
+      "name": "Alberta Children's Hospital",
+      "latitude": 51.0744845,
+      "longitude": -114.14835957
+    },
+    {
+      "id": "106",
+      "code": "FMC",
+      "name": "Foothills Medical Centre",
+      "latitude": 51.06473793,
+      "longitude": -114.13442939
+    },
+    {
+      "id": "107",
+      "code": "NT",
+      "name": "FMC North Tower",
+      "latitude": 51.06545292,
+      "longitude": -114.13170388
+    },
+    {
+      "id": "108",
+      "code": "ST",
+      "name": "FMC South Tower",
+      "latitude": 51.0624418,
+      "longitude": -114.13473959
+    },
+    {
+      "id": "109",
+      "code": "TBCC",
+      "name": "Tom Baker Cancer Centre",
+      "latitude": 51.06282909,
+      "longitude": -114.1332627
+    },
+    {
+      "id": "110",
+      "code": "WR",
+      "name": "Wildlife Research Station",
+      "latitude": 51.16003604,
+      "longitude": -114.22691126
+    },
+    {
+      "id": "111",
+      "code": "LSIH",
+      "name": "Life Sciences Innovation Hub",
+      "latitude": 51.08466541,
+      "longitude": -114.13994129
+    },
+    {
+      "id": "112",
+      "code": "VCA",
+      "name": "Family Housing Block A",
+      "latitude": 51.0799524,
+      "longitude": -114.14055011
+    },
+    {
+      "id": "113",
+      "code": "VCB",
+      "name": "Family Housing Block B",
+      "latitude": 51.07989573,
+      "longitude": -114.14104635
+    },
+    {
+      "id": "114",
+      "code": "VCC",
+      "name": "Family Housing Block C",
+      "latitude": 51.08022986,
+      "longitude": -114.14108356
+    },
+    {
+      "id": "115",
+      "code": "VCD",
+      "name": "Family Housing Block D",
+      "latitude": 51.08031236,
+      "longitude": -114.14060381
+    },
+    {
+      "id": "116",
+      "code": "VCE",
+      "name": "Family Housing Block E",
+      "latitude": 51.08070329,
+      "longitude": -114.1406457
+    },
+    {
+      "id": "117",
+      "code": "VCF",
+      "name": "Family Housing Block F",
+      "latitude": 51.08063165,
+      "longitude": -114.14113301
+    },
+    {
+      "id": "118",
+      "code": "VCG",
+      "name": "Family Housing Block G",
+      "latitude": 51.08104881,
+      "longitude": -114.140806
+    },
+    {
+      "id": "137",
+      "code": "RBMRS",
+      "name": "R.B. Miller Research Station",
+      "latitude": 50.64567747,
+      "longitude": -114.65284942
+    },
+    {
+      "id": "138",
+      "code": "MT",
+      "name": "MacKimmie Tower",
+      "latitude": 51.07747931,
+      "longitude": -114.12886686
+    },
+    {
+      "id": "139",
+      "code": "MH",
+      "name": "MacEwan Hall",
+      "latitude": 51.07859427,
+      "longitude": -114.13046071
+    },
+    {
+      "id": "141",
+      "code": "MTH",
+      "name": "Mathison Hall",
+      "latitude": 51.07677619,
+      "longitude": -114.12469203
+    },
+    {
+      "id": "143",
+      "code": "HNSC",
+      "name": "Hunter Student Commons",
+      "latitude": 51.07797011,
+      "longitude": -114.12901014
+    },
+    {
+      "id": "148",
+      "code": "LOT 8",
+      "name": "Staff Parkade (Lot 8)",
+      "latitude": 51.06614505,
+      "longitude": -114.13140426
+    },
+    {
+      "id": "150",
+      "code": "WHC",
+      "name": "Women's Health Centre",
+      "latitude": 51.06570318,
+      "longitude": -114.13222657
+    },
+    {
+      "id": "151",
+      "code": "MCT",
+      "name": "McCaig Tower",
+      "latitude": 51.06536711,
+      "longitude": -114.13583157
+    },
+    {
+      "id": "152",
+      "code": "PWR",
+      "name": "Central Power Plant",
+      "latitude": 51.06482807,
+      "longitude": -114.13678018
+    },
+    {
+      "id": "153",
+      "code": "SS",
+      "name": "Special Services Building",
+      "latitude": 51.0634412,
+      "longitude": -114.13432526
+    },
+    {
+      "id": "154",
+      "code": "PARK",
+      "name": "Central Parking",
+      "latitude": 51.06404499,
+      "longitude": -114.13255877
+    },
+    {
+      "id": "155",
+      "code": "LOT 6",
+      "name": "North Parkade (Lot 6)",
+      "latitude": 51.06739071,
+      "longitude": -114.1331238
+    },
+    {
+      "id": "157",
+      "code": "ACCC",
+      "name": "Arthur J.E. Child Comprehensive Cancer Centre",
+      "latitude": 51.06721921,
+      "longitude": -114.13079404
+    },
+    {
+      "id": "158",
+      "code": "ACH PARK",
+      "name": "Alberta Children's Hospital Parkade",
+      "latitude": 51.0741674,
+      "longitude": -114.14630581
+    },
+    {
+      "id": "174",
+      "code": "CFIA",
+      "name": "Canadian Food Inspection Agency",
+      "latitude": 51.08486399,
+      "longitude": -114.13808342
+    },
+    {
+      "id": "177",
+      "code": "ARC",
+      "name": "Alberta Research Council",
+      "latitude": 51.08487494,
+      "longitude": -114.13322945
+    },
+    {
+      "id": "178",
+      "code": "AER-CRC",
+      "name": "Alberta Energy Regulator - Core Research Centre",
+      "latitude": 51.08362239,
+      "longitude": -114.13630938
+    },
+    {
+      "id": "181",
+      "code": "GSC",
+      "name": "Geological Survey of Canada",
+      "latitude": 51.08235651,
+      "longitude": -114.13595574
+    },
+    {
+      "id": "185",
+      "code": "ARTC",
+      "name": "Alastair Ross Technology Centre",
+      "latitude": 51.08433382,
+      "longitude": -114.13059737
+    },
+    {
+      "id": "188",
+      "code": "CMG",
+      "name": "Computer Modelling Group",
+      "latitude": 51.08581595,
+      "longitude": -114.13331888
+    },
+    {
+      "id": "200",
+      "code": "RMHC",
+      "name": "Ronald McDonald House Charities Alberta",
+      "latitude": 51.07360687,
+      "longitude": -114.14305899
+    },
+    {
+      "id": "254",
+      "code": "WMRB",
+      "name": "Wild Mouse Research Barn",
+      "latitude": 51.15860595,
+      "longitude": -114.21429486
+    },
+    {
+      "id": "288",
+      "code": "VLC",
+      "name": "Veterinary Learning Commons",
+      "latitude": 51.15929424,
+      "longitude": -114.21627357
+    },
+    {
+      "id": "289",
+      "code": "VMMS",
+      "name": "Vet Med Maintenance Shed",
+      "latitude": 51.15875069,
+      "longitude": -114.21526661
+    },
+    {
+      "id": "290",
+      "code": "TRN",
+      "name": "Trailer N - Spy Hill 1",
+      "latitude": 51.15878601,
+      "longitude": -114.21470436
+    },
+    {
+      "id": "291",
+      "code": "TRO",
+      "name": "Trailer O - Spy Hill 2",
+      "latitude": 51.15879232,
+      "longitude": -114.21452163
+    },
+    {
+      "id": "293",
+      "code": "UCDC1",
+      "name": "University of Calgary Downtown Campus 1",
+      "latitude": 51.04650277,
+      "longitude": -114.07930488
+    }
+  ]
+}

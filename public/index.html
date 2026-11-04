@@ -2,122 +2,384 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="description"
-      content="UCalgary Guessr — test how well you know the University of Calgary campus."
-    />
-    <title>UCalgary Guessr</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>UCalgaryGuessr</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/icons/favicon.svg" />
 
+    <!-- ArcGIS Maps SDK for JavaScript 5.1 -->
+    <script type="module" src="https://js.arcgis.com/5.1/"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-      crossorigin=""
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400..800&amp;family=Montserrat:wght@600..800&amp;display=swap"
     />
-
     <link rel="stylesheet" href="/css/styles.css" />
   </head>
   <body>
     <div id="app">
       <header class="site-header">
-        <div class="header-inner">
-          <div class="brand-copy">
-            <h1>UCalgary Guessr</h1>
-            <p>How well do you know campus?</p>
-          </div>
+        <div class="header-spacer" aria-hidden="true"></div>
 
-          <img
-            id="logo"
-            src="/assets/logos/logo.png"
-            alt="UCalgary Trivia Club logo"
-          />
+        <a class="brand-block" href="/" aria-label="UCalgaryGuessr home">
+          <img id="logo" src="/assets/logos/logo.png" alt="UCalgaryGuessr logo" />
+          <div class="brand-copy">
+            <h1>UCalgaryGuessr</h1>
+            <p class="tagline">How well do you know campus?</p>
+          </div>
+        </a>
+
+        <div class="game-hud" aria-label="Game progress">
+          <div class="game-progress-copy">
+            <p id="mode-label" class="eyebrow">Game</p>
+            <h2 id="game-page-title">UCalgaryGuessr</h2>
+            <div class="round-heading">
+              <h2 id="round-title">Loading…</h2>
+              <div id="round-progress" class="round-progress" aria-hidden="true"></div>
+            </div>
+          </div>
+          <div class="score-row">
+            <span class="score-label">Total score</span>
+            <strong id="score-summary">0 / 5,000</strong>
+          </div>
+          <div id="daily-stopwatch" class="stopwatch-row" hidden>
+            <span class="score-label">Time</span>
+            <strong id="stopwatch-value">00:00</strong>
+          </div>
+        </div>
+
+        <div id="auth-controls" class="auth-controls" aria-live="polite">
+          <button id="leaderboard-btn" class="secondary-btn game-header-action" type="button">Leaderboard</button>
+          <button id="help-btn" class="secondary-btn game-header-action" type="button" aria-label="How to play">Help</button>
+          <span id="user-status">Playing as guest</span>
+          <button id="login-btn" class="secondary-btn" type="button">Log in</button>
+          <button id="signup-btn" class="primary-btn" type="button">Sign up</button>
+          <button id="logout-btn" class="secondary-btn" type="button" hidden>Log out</button>
         </div>
       </header>
 
-      <main class="game-shell">
-        <section id="status-panel" aria-label="Game progress">
-          <div class="round-status">
-            <span class="eyebrow">Campus challenge</span>
+      <main id="landing-view" class="landing-view" hidden>
+        <div class="landing-backdrop" aria-hidden="true"></div>
 
-            <div class="round-row">
-              <h2 id="round-title">Round 1 of 5</h2>
-              <div
-                id="round-progress"
-                aria-label="Round progress"
-                role="img"
-              ></div>
+        <div class="landing-content">
+          <div class="landing-options" aria-label="Choose a game mode">
+            <a class="landing-option landing-option-play" href="/play">
+              <span class="landing-option-shade" aria-hidden="true"></span>
+              <span class="landing-option-copy">
+                <strong>Play</strong>
+                <span>Play a random game</span>
+              </span>
+            </a>
+
+            <a class="landing-option landing-option-weekly" href="/weekly">
+              <span class="landing-option-shade" aria-hidden="true"></span>
+              <span class="landing-option-copy">
+                <strong>Weekly</strong>
+                <span>Play the weekly challenge</span>
+              </span>
+            </a>
+
+            <a class="landing-option landing-option-daily" href="/daily">
+              <span class="landing-option-shade" aria-hidden="true"></span>
+              <span class="landing-option-copy">
+                <strong>Daily</strong>
+                <span>Play the daily challenge</span>
+              </span>
+            </a>
+          </div>
+
+          <p id="landing-status" class="landing-status" aria-live="polite"></p>
+        </div>
+
+        <footer class="landing-footer">
+          <nav class="social-links" aria-label="UCalgary Trivia Club links">
+            <a
+              class="social-link"
+              href="https://discord.gg/kM6AnaEfSg"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="UCalgary Trivia Club Discord"
+              title="Discord"
+            >
+              <img
+                src="/assets/icons/social/discord.svg"
+                alt=""
+                aria-hidden="true"
+              />
+            </a>
+
+            <a
+              class="social-link"
+              href="https://ucalgary-trivia-club.vercel.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="UCalgary Trivia Club website"
+              title="UCTC website"
+            >
+              <img
+                src="/assets/icons/social/website.svg"
+                alt=""
+                aria-hidden="true"
+              />
+            </a>
+
+            <a
+              class="social-link"
+              href="https://www.instagram.com/trivia.ucalgary"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="UCalgary Trivia Club Instagram"
+              title="Instagram"
+            >
+              <img
+                src="/assets/icons/social/instagram.svg"
+                alt=""
+                aria-hidden="true"
+              />
+            </a>
+          </nav>
+
+          <a class="landing-email" href="mailto:triviaucalgary@gmail.com">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M3 6.5h18v11H3z"></path>
+              <path d="m4 8 8 6 8-6"></path>
+            </svg>
+            <span>triviaucalgary@gmail.com</span>
+          </a>
+
+          <div class="landing-footer-spacer" aria-hidden="true"></div>
+        </footer>
+      </main>
+
+      <main id="game-view" class="game-view" hidden>
+        <p id="game-announcement" class="sr-only" role="status" aria-atomic="true"></p>
+        <div class="content-shell">
+          <div id="layout">
+            <div id="mobile-game-tabs" class="mobile-game-tabs" role="tablist" aria-label="Game view">
+              <button id="photo-tab" type="button" role="tab" aria-selected="true" aria-controls="image-panel">Photo</button>
+              <button id="map-tab" type="button" role="tab" aria-selected="false" aria-controls="map-panel" tabindex="-1">Map</button>
             </div>
-          </div>
+            <section id="image-panel" class="game-card">
+              <div class="scene-frame">
+                <img id="scene-image" src="" alt="Campus scene" draggable="false" hidden />
+                <div id="scene-placeholder" class="scene-placeholder is-loading" role="status" aria-busy="true">Image loading</div>
+              </div>
 
-          <div class="score-block">
-            <span class="score-label">Total score</span>
-            <strong id="score-summary">0 / 25,000</strong>
-          </div>
-        </section>
+            </section>
 
-        <section id="layout">
-          <article id="image-panel" class="game-card">
-            <div class="image-heading">
-              <div>
-                <span class="card-label">Photo</span>
-                <h3>Where was this taken?</h3>
+            <div id="map-workspace" class="map-workspace">
+              <section id="map-panel" class="map-card" aria-label="University of Calgary campus map">
+                <button
+                  id="map-expand-btn"
+                  class="map-expand-control"
+                  type="button"
+                  aria-label="Expand map"
+                  aria-pressed="false"
+                  title="Expand map"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"></path>
+                  </svg>
+                </button>
+
+                <arcgis-map
+                  id="map"
+                  item-id="0a861e48880643e7a8d46e5a995ebc2e"
+                  popup-disabled
+                >
+                  <arcgis-zoom slot="top-left"></arcgis-zoom>
+                </arcgis-map>
+                <aside id="map-result-summary" class="map-result-summary" aria-label="Guess and correct location" hidden>
+                  <div class="map-result-compact">
+                    <strong id="map-result-distance" class="map-result-distance"></strong>
+                    <button id="map-legend-btn" class="text-button" type="button" aria-expanded="false" aria-controls="map-result-legend">Map key</button>
+                  </div>
+                  <div id="map-result-legend" hidden>
+                  <div class="map-result-entry">
+                    <span class="map-result-swatch map-result-swatch-guess" aria-hidden="true"></span>
+                    <span>Your guess</span><strong id="map-result-guess"></strong>
+                  </div>
+                  <div class="map-result-entry">
+                    <span class="map-result-swatch map-result-swatch-answer" aria-hidden="true"></span>
+                    <span>Correct</span><strong id="map-result-answer"></strong>
+                  </div>
+                  </div>
+                </aside>
+              </section>
+
+              <section id="status-panel" class="status-card" aria-label="Guess result" hidden>
+                <div id="result" class="result-card" data-state="prompt">
+                  <p id="result-kicker" class="result-kicker">UCalgaryGuessr</p>
+                  <p id="result-primary" class="result-primary" tabindex="-1">Loading…</p>
+                  <div id="result-feedback-block" class="result-feedback-block" hidden>
+                    <p id="result-feedback" class="result-feedback"></p>
+                    <p id="result-feedback-detail" class="result-secondary"></p>
+                  </div>
+                  <dl id="result-details" class="result-details" hidden>
+                    <div id="result-guess-row"><dt>Your guess</dt><dd id="result-guess"></dd></div>
+                    <div><dt id="result-answer-label">Correct location</dt><dd id="result-answer"></dd></div>
+                    <div><dt>Distance</dt><dd id="result-distance"></dd></div>
+                    <div id="result-time-row" hidden><dt>Completion time</dt><dd id="result-time"></dd></div>
+                    <div id="result-ranking-row" hidden><dt>Ranking</dt><dd id="result-ranking"></dd></div>
+                  </dl>
+                  <p id="result-secondary" class="result-secondary"></p>
+                  <div id="daily-share" hidden>
+                    <div id="daily-result-actions" class="daily-result-actions">
+                      <button id="daily-share-btn" class="primary-btn" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m9 10.5 6.5-4M9 13.5l6.5 4"/></svg>Share Result</button>
+                      <button id="result-leaderboard-btn" class="secondary-btn" type="button">View Leaderboard</button>
+                    </div>
+                    <p id="daily-share-status" class="result-secondary" role="status"></p>
+                    <textarea id="daily-share-text" rows="3" readonly aria-label="Score to copy" hidden></textarea>
+                    <div id="daily-guest-note" class="daily-guest-note" hidden>
+                      <span id="daily-guest-message">This attempt is unranked. Sign in before playing future Daily challenges to compete.</span>
+                      <button id="result-login-btn" class="text-button" type="button">Sign in for future Dailies</button>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <div id="controls" class="game-controls">
+                <div class="guess-selection" aria-live="polite" aria-atomic="true">
+                  <strong id="selected-location">No location selected</strong>
+                  <span id="selection-hint">Select a building or place a pin on the map.</span>
+                </div>
+                <div class="guess-actions">
+                  <button id="make-guess-btn" class="primary-btn" type="button" disabled>Submit guess</button>
+                  <button id="next-image-btn" class="secondary-btn" type="button" disabled>Next image</button>
+                  <button id="restart-btn" class="secondary-btn" type="button" hidden>New random round</button>
+                </div>
               </div>
             </div>
-
-            <div class="image-frame">
-              <img id="scene-image" src="" alt="Campus scene" />
-            </div>
-          </article>
-
-          <article id="map-panel" class="game-card">
-            <div class="map-heading">
-              <div class="map-heading-copy">
-                <span class="card-label">Campus map</span>
-                <h3>Place your guess</h3>
-                <p>Click anywhere on the map. Click again to adjust.</p>
-              </div>
-
-              <div class="map-legend" aria-label="Map marker legend">
-                <span class="legend-item">
-                  <span class="legend-dot guess"></span>
-                  Your guess
-                </span>
-                <span class="legend-item">
-                  <span class="legend-dot answer"></span>
-                  Answer
-                </span>
-              </div>
-            </div>
-
-            <div id="map" aria-label="University of Calgary campus map"></div>
-          </article>
-        </section>
-
-        <section class="interaction-panel" aria-label="Round controls">
-          <div id="result" data-state="prompt" aria-live="polite">
-            <span id="result-kicker" class="result-kicker">Ready?</span>
-            <div id="result-primary" class="result-primary">
-              Click the map to place your guess.
-            </div>
-            <div id="result-secondary" class="result-secondary"></div>
           </div>
+        </div>
+      </main>
 
-          <div id="controls">
-            <button id="make-guess-btn">Make guess</button>
-            <button id="next-image-btn">Next image</button>
-            <button id="restart-btn" style="display: none;">Play again</button>
-          </div>
+      <main id="reset-view" class="reset-view" hidden>
+        <section class="reset-card">
+          <p class="eyebrow">Account recovery</p>
+          <h2>Reset your password</h2>
+          <p class="reset-intro">Choose a new password for your UCalgaryGuessr account.</p>
+
+          <form id="reset-password-form" class="auth-form">
+            <label>
+              New password
+              <input id="reset-password" type="password" autocomplete="new-password" minlength="8" required />
+            </label>
+            <label>
+              Confirm new password
+              <input id="reset-password-confirm" type="password" autocomplete="new-password" minlength="8" required />
+            </label>
+            <button class="primary-btn" type="submit">Reset password</button>
+          </form>
+
+          <p id="reset-message" class="auth-message" aria-live="polite"></p>
+          <a class="text-link" href="/">Return to home</a>
         </section>
       </main>
     </div>
 
-    <script
-      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-      crossorigin=""
-    ></script>
+    <dialog id="help-dialog" class="auth-dialog" aria-labelledby="help-title">
+      <div class="dialog-heading-row">
+        <h2 id="help-title">How to play</h2>
+        <button id="help-close-btn" class="icon-btn" type="button" aria-label="Close help">×</button>
+      </div>
+      <p>Study the campus photo, then select a building or place a pin on the map. You can change your selection before pressing Submit guess.</p>
+      <p>Use the mouse wheel over the photo to zoom in or out. When zoomed in, click and hold to drag the photo in any direction. Each new photo starts fully zoomed out.</p>
+      <p>A correct building earns 5,000 points. Other guesses score based on distance. Random games have five photos.</p>
+      <p>Daily resets at midnight Mountain Time. Weekly resets Sunday at midnight Mountain Time. Both timers count only active time on that challenge page. Log in before playing for a ranked attempt. Guests can play, but their results are unranked.</p>
+    </dialog>
 
+    <dialog id="leaderboard-dialog" class="leaderboard-dialog">
+      <div class="dialog-heading-row">
+        <div>
+          <p id="leaderboard-mode" class="eyebrow">Daily</p>
+          <h2 id="leaderboard-title">Daily leaderboard</h2>
+        </div>
+        <button id="leaderboard-close-btn" class="icon-btn" type="button" aria-label="Close leaderboard">×</button>
+      </div>
+
+      <span id="leaderboard-date" class="leaderboard-date"></span>
+      <p id="leaderboard-message" class="leaderboard-message">Loading scores…</p>
+      <ol id="leaderboard-list" class="leaderboard-list" aria-label="Daily leaderboard"></ol>
+      <p id="leaderboard-note" class="leaderboard-note">Only logged-in daily scores are recorded.</p>
+    </dialog>
+
+    <dialog id="auth-dialog" class="auth-dialog">
+      <div class="dialog-heading-row">
+        <div class="auth-tabs" role="tablist" aria-label="Account action">
+          <button id="auth-login-tab" class="auth-tab active" type="button" role="tab" aria-selected="true">
+            Log in
+          </button>
+          <button id="auth-signup-tab" class="auth-tab" type="button" role="tab" aria-selected="false">
+            Sign up
+          </button>
+        </div>
+        <button id="auth-close-btn" class="icon-btn" type="button" aria-label="Close">×</button>
+      </div>
+
+      <section id="auth-login-view">
+        <form id="login-form" class="auth-form">
+          <h2>Log in with password</h2>
+          <label>
+            Username or email
+            <input id="login-identifier" name="identifier" type="text" autocomplete="username" required />
+          </label>
+          <label>
+            Password
+            <input id="login-password" name="password" type="password" autocomplete="current-password" required />
+          </label>
+          <button class="primary-btn" type="submit">Log in</button>
+          <div class="auth-link-row">
+            <button id="forgot-password-btn" class="text-button" type="button">Forgot your password?</button>
+            <button id="magic-login-btn" class="text-button" type="button">Email me a login link</button>
+          </div>
+        </form>
+      </section>
+
+      <form id="signup-form" class="auth-form" hidden>
+        <h2>Create account</h2>
+        <label>
+          Username
+          <input id="signup-username" name="username" type="text" autocomplete="username" minlength="3" maxlength="30" required />
+        </label>
+        <label>
+          Email
+          <input id="signup-email" name="email" type="email" autocomplete="email" required />
+        </label>
+        <label>
+          Password
+          <input id="signup-password" name="password" type="password" autocomplete="new-password" minlength="8" required />
+        </label>
+        <button class="primary-btn" type="submit">Sign up</button>
+      </form>
+
+      <form id="magic-link-form" class="auth-form" hidden>
+        <button class="back-button" data-auth-back type="button">← Back to log in</button>
+        <h2>Email login link</h2>
+        <p class="auth-explanation">Enter the email address on your account. We will send you a single-use login link.</p>
+        <label>
+          Email
+          <input id="magic-email" type="email" autocomplete="email" required />
+        </label>
+        <button class="primary-btn" type="submit">Email login link</button>
+      </form>
+
+      <form id="forgot-password-form" class="auth-form" hidden>
+        <button class="back-button" data-auth-back type="button">← Back to log in</button>
+        <h2>Forgot your password?</h2>
+        <p class="auth-explanation">Enter either your username or your email address.</p>
+        <label>
+          Username or email
+          <input id="forgot-identifier" type="text" autocomplete="username" required />
+        </label>
+        <button class="primary-btn" type="submit">Send reset link</button>
+      </form>
+
+      <p id="auth-message" class="auth-message" aria-live="polite"></p>
+    </dialog>
+
+    <script type="module" src="/js/analytics.js"></script>
     <script type="module" src="/js/main.js"></script>
   </body>
 </html>

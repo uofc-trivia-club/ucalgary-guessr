@@ -1,20 +1,62 @@
 // public/js/gameState.js
 
-// How many points each perfect guess is worth
 const MAX_SCORE_PER_IMAGE = 5000;
 
-// Core state
-let currentRound = null;     // { roundId, name, images: [...] }
-let currentIndex = 0;        // 0..images.length-1
+let gameMode = "daily"; // "daily" | "weekly" | "random"
+let currentUser = null;
+let dailyChallenge = null;
+let dailyCompleted = false;
+
+let currentRound = null;
+let currentIndex = 0;
 let totalScore = 0;
-
-// Track images already shown this browser session
-const usedImagePaths = new Set();
-
-// Track the last guess in image coordinates { x, y }
 let lastGuess = null;
 
-// ---- Round / image state ----
+const usedImagePaths = new Set();
+
+// ---------- Mode ----------
+
+export function setGameMode(mode) {
+  if (!["daily", "weekly", "random"].includes(mode)) {
+    throw new Error(`Unsupported game mode: ${mode}`);
+  }
+  gameMode = mode;
+}
+
+export function getGameMode() {
+  return gameMode;
+}
+
+// ---------- Authentication ----------
+
+export function setCurrentUser(user) {
+  currentUser = user || null;
+}
+
+export function getCurrentUserState() {
+  return currentUser;
+}
+
+// ---------- Daily challenge ----------
+
+export function setDailyChallenge(challenge) {
+  dailyChallenge = challenge || null;
+  dailyCompleted = Boolean(challenge?.completed);
+}
+
+export function getDailyChallengeState() {
+  return dailyChallenge;
+}
+
+export function setDailyCompleted(completed) {
+  dailyCompleted = Boolean(completed);
+}
+
+export function isDailyCompleted() {
+  return dailyCompleted;
+}
+
+// ---------- Round / image state ----------
 
 export function setRound(round) {
   currentRound = round;
@@ -44,10 +86,14 @@ export function isLastImage() {
   return currentIndex >= currentRound.images.length - 1;
 }
 
-// ---- Scoring ----
+// ---------- Scoring ----------
 
 export function addScore(score) {
-  totalScore += score;
+  totalScore += Number(score) || 0;
+}
+
+export function setTotalScore(score) {
+  totalScore = Number(score) || 0;
 }
 
 export function getTotalScore() {
@@ -59,7 +105,7 @@ export function getRoundMaxScore() {
   return currentRound.images.length * MAX_SCORE_PER_IMAGE;
 }
 
-// ---- Used images ----
+// ---------- Used random images ----------
 
 export function getUnusedImages(images) {
   if (!Array.isArray(images)) return [];
@@ -70,17 +116,14 @@ export function getUnusedImages(images) {
 
 export function rememberImagesUsed(images) {
   if (!Array.isArray(images)) return;
-  images.forEach((img) => {
-    if (img && img.imagePath) {
-      usedImagePaths.add(img.imagePath);
-    }
-  });
+  for (const img of images) {
+    if (img?.imagePath) usedImagePaths.add(img.imagePath);
+  }
 }
 
-// ---- Last guess ----
+// ---------- Last guess ----------
 
 export function setLastGuess(guess) {
-  // guess is { x, y } in image coordinates
   lastGuess = guess;
 }
 
@@ -92,12 +135,18 @@ export function clearLastGuess() {
   lastGuess = null;
 }
 
-// ---- Full restart ----
+// ---------- Reset helpers ----------
 
-export function resetSession() {
+export function resetRoundState() {
   currentRound = null;
   currentIndex = 0;
   totalScore = 0;
   lastGuess = null;
+}
+
+export function resetSession() {
+  resetRoundState();
+  dailyChallenge = null;
+  dailyCompleted = false;
   usedImagePaths.clear();
 }

@@ -9,16 +9,38 @@ pnpm-debug.log*
 *.db
 *.sqlite
 *.sqlite3
+*-wal
+*-shm
+*-journal
 server/db/dev.db
 
 # Env / secrets
 .env
-.env.*.local
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+.aws/
+.vercel/
+
+# Private assets, local backups, and runtime logs
+.local/
+public/assets/photos-large/
+# Game photos are kept out of the public repository; add them locally to play.
+public/assets/photos/
+*.log
+*.bak
+*.backup
+*.dump
 
 # Build / coverage output
 dist/
 build/
 coverage/
+playwright-report/
+test-results/
 .tmp/
 
 # OS / editor
