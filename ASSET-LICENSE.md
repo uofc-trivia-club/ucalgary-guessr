@@ -8,7 +8,8 @@ license to reuse those assets.
 The game's photographs (`public/assets/photos/`) are not distributed with this
 repository and no license is granted for them. Older commits may contain a small
 number of early photographs; they are covered by this notice too, and no
-license is granted to reuse them.
+license is granted to reuse them. The same applies to the screenshots in
+`docs/screenshots/`, which include game photographs and map data.
 
 Rights to other assets, including fonts, maps, icons, logos, and backgrounds,
 must be verified separately before public release. Inclusion is not evidence
